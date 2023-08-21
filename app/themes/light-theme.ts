@@ -17,5 +17,9 @@ export const lightTheme = createTheme({
       main: red[400],
     },
   },
-  components: {},
+  components: {
+    MuiAppBar: {
+      defaultProps: { elevation: 0 },
+    },
+  },
 })
