@@ -2,6 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
 import ThemeRegistry from './ThemeRegistry'
+import { UIProvider } from '../context/ui'
 
 const roboto = Roboto({ weight: '400', subsets: ['latin'] })
 
@@ -18,7 +19,9 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={roboto.className}>
-        <ThemeRegistry options={{ key: 'mui' }}>{children}</ThemeRegistry>
+        <UIProvider>
+          <ThemeRegistry options={{ key: 'mui' }}>{children}</ThemeRegistry>
+        </UIProvider>
       </body>
     </html>
   )
