@@ -1,5 +1,11 @@
-const HomePage = () => {
-  return <div>OPEN JIRA</div>;
-};
+import { Typography } from '@mui/material'
 
-export default HomePage;
+const HomePage = () => {
+  return (
+    <Typography variant='h1' color='primary'>
+      Open Jira
+    </Typography>
+  )
+}
+
+export default HomePage
