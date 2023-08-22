@@ -3,7 +3,7 @@ import { Entry } from '@/interfaces'
 import { EntriesState } from './EntriesProvider'
 
 export enum EntriesAction {
-  Add = 'Add',
+  Add = 'ADD',
 }
 
 type EntriesActionType = { type: EntriesAction; payload: Entry }
