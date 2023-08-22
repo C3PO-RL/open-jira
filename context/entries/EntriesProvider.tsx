@@ -45,8 +45,12 @@ export const EntriesProvider = ({ children }: { children: ReactNode }) => {
     dispatch({ type: EntriesAction.Add, payload: newEntry })
   }
 
+  const updateEntry = (entry: Entry) => {
+    dispatch({ type: EntriesAction.UpdateEntry, payload: entry })
+  }
+
   return (
-    <EntriesContext.Provider value={{ ...state, addNewEntry }}>
+    <EntriesContext.Provider value={{ ...state, addNewEntry, updateEntry }}>
       {children}
     </EntriesContext.Provider>
   )

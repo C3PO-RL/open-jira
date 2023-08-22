@@ -3,9 +3,10 @@ import React, { useContext, useState } from 'react'
 import { AddCircleOutline, SaveOutlined } from '@mui/icons-material'
 import { Box, Button, TextField } from '@mui/material'
 import { EntriesContext } from '@/context/entries'
+import { UIContext } from '@/context/ui'
 
 export const NewEntry = () => {
-  const [isAdding, setIsAdding] = useState<boolean>(false)
+  const { setIsAddingEntry, isAddingEntry } = useContext(UIContext)
   const [inputValue, setInputValue] = useState<string>('')
   const [touched, setTouched] = useState<boolean>(false)
   const { addNewEntry } = useContext(EntriesContext)
@@ -19,13 +20,13 @@ export const NewEntry = () => {
   const onSave = () => {
     if (inputValue.length === 0) return
     addNewEntry(inputValue)
-    setIsAdding(false)
+    setIsAddingEntry(false)
     setTouched(false)
     setInputValue('')
   }
   return (
     <Box sx={{ marginBottom: 2, paddingX: 2 }}>
-      {isAdding ? (
+      {isAddingEntry ? (
         <>
           <TextField
             fullWidth
@@ -48,7 +49,7 @@ export const NewEntry = () => {
             <Button
               variant='text'
               color='secondary'
-              onClick={() => setIsAdding(false)}
+              onClick={() => setIsAddingEntry(false)}
             >
               Cancelar
             </Button>
@@ -67,7 +68,7 @@ export const NewEntry = () => {
           startIcon={<AddCircleOutline />}
           fullWidth
           variant='outlined'
-          onClick={() => setIsAdding(true)}
+          onClick={() => setIsAddingEntry(true)}
         >
           Add new entry
         </Button>
