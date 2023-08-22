@@ -1,7 +1,7 @@
 export enum Status {
   Pending = 'Pending',
   InProgress = 'InProgress',
-  Finished = 'InProgress',
+  Finished = 'Finished',
 }
 
 export interface Entry {
