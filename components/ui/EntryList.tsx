@@ -1,5 +1,5 @@
 'use client'
-import React, { FC, useContext, useMemo } from 'react'
+import React, { DragEvent, FC, useContext, useMemo } from 'react'
 import { List, Paper } from '@mui/material'
 import { EntryCard } from './EntryCard'
 import { Status } from '@/interfaces'
@@ -11,14 +11,23 @@ interface Props {
 
 export const EntryList: FC<Props> = ({ status }) => {
   const { entries } = useContext(EntriesContext)
+
   const entriesByStatus = useMemo(
     () => entries.filter((entry) => entry.status === status),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [entries]
   )
 
+  const onDropEntry = (e: DragEvent<HTMLDivElement>) => {
+    const id = e.dataTransfer.getData('text')
+  }
+
+  const allowDrop = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+  }
+
   return (
-    <div>
+    <div onDrop={onDropEntry} onDragOver={allowDrop}>
       <Paper
         sx={{
           height: 'calc(100vh - 250px)',
