@@ -1,13 +1,27 @@
-import { Typography } from '@mui/material'
-import { Layout } from '../components/layouts'
+import { Card, CardContent, CardHeader, Grid } from '@mui/material'
 
 const HomePage = () => {
   return (
-    <Layout>
-      <Typography variant='h1' color='primary'>
-        Open Jira
-      </Typography>
-    </Layout>
+    <>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={4}>
+          <Card sx={{ height: 'calc(100vh - 100px)' }}>
+            <CardHeader title='Pending'></CardHeader>
+            <CardContent></CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Card sx={{ height: 'calc(100vh - 100px)' }}>
+            <CardHeader title='Started'></CardHeader>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Card sx={{ height: 'calc(100vh - 100px)' }}>
+            <CardHeader title='Done'></CardHeader>
+          </Card>
+        </Grid>
+      </Grid>
+    </>
   )
 }
 
