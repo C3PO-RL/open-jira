@@ -1,3 +1,4 @@
+'use client'
 import { EntriesState } from './EntriesProvider'
 
 enum Action {}

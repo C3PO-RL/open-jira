@@ -4,6 +4,7 @@ import { Roboto } from 'next/font/google'
 import ThemeRegistry from './ThemeRegistry'
 import { UIProvider } from '../context/ui'
 import { Layout } from '@/components/layouts'
+import { EntriesProvider } from '@/context/entries'
 
 const roboto = Roboto({ weight: '400', subsets: ['latin'] })
 
@@ -20,11 +21,13 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={roboto.className}>
-        <UIProvider>
-          <ThemeRegistry options={{ key: 'mui' }}>
-            <Layout>{children}</Layout>
-          </ThemeRegistry>
-        </UIProvider>
+        <EntriesProvider>
+          <UIProvider>
+            <ThemeRegistry options={{ key: 'mui' }}>
+              <Layout>{children}</Layout>
+            </ThemeRegistry>
+          </UIProvider>
+        </EntriesProvider>
       </body>
     </html>
   )
