@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const EntryList: FC<Props> = ({ status }) => {
-  const { entries, updatEntry } = useContext(EntriesContext)
+  const { entries, updateEntry } = useContext(EntriesContext)
   const { isDragging, dragging } = useContext(UIContext)
 
   const entriesByStatus = useMemo(
@@ -25,7 +25,7 @@ export const EntryList: FC<Props> = ({ status }) => {
     const id = e.dataTransfer.getData('text')
     const entry = entries.find((e) => e._id === id)!
     entry.status = status
-    updatEntry(entry)
+    updateEntry(entry)
     dragging(false)
   }
 
@@ -42,7 +42,7 @@ export const EntryList: FC<Props> = ({ status }) => {
       <Paper
         sx={{
           height: 'calc(100vh - 250px)',
-          overflow: 'hidden',
+          overflow: 'auto',
           backgroundColor: 'transparent',
           padding: '1px 5px',
         }}
