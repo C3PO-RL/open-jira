@@ -1,17 +1,20 @@
 'use client'
+import { Entry } from '@/interfaces'
 import { EntriesState } from './EntriesProvider'
 
-enum Action {}
+export enum EntriesAction {
+  Add = 'Add',
+}
 
-type EntriesActionType = { type: Action }
+type EntriesActionType = { type: EntriesAction; payload: Entry }
 
 export const entriesReducer = (
   state: EntriesState,
   action: EntriesActionType
 ): EntriesState => {
   switch (action.type) {
-    // case '':
-    //   return { ...state }
+    case EntriesAction.Add:
+      return { ...state, entries: [...state.entries, action.payload] }
 
     // case '':
     //   return { ...state }

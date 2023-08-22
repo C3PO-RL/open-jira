@@ -31,11 +31,6 @@ export const EntryList: FC<Props> = ({ status }) => {
           {entriesByStatus.map((item) => (
             <EntryCard key={item._id} entry={item} />
           ))}
-          {/* <EntryCard />
-          <EntryCard />
-          <EntryCard />
-          <EntryCard />
-          <EntryCard /> */}
         </List>
       </Paper>
     </div>
