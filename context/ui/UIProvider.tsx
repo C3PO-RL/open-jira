@@ -6,9 +6,14 @@ import { uiReducer, UIAction } from './uiReducer'
 export interface UIState {
   sideMenuOpen: boolean
   isAddingEntry: boolean
+  isDragging: boolean
 }
 
-const UI_INITIAL_STATE: UIState = { sideMenuOpen: false, isAddingEntry: false }
+const UI_INITIAL_STATE: UIState = {
+  sideMenuOpen: false,
+  isAddingEntry: false,
+  isDragging: false,
+}
 
 export const UIProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(uiReducer, UI_INITIAL_STATE)
@@ -22,9 +27,19 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
   const setIsAddingEntry = (isAddingEntry: boolean) => {
     dispatch({ type: UIAction.AddEntry, payload: isAddingEntry })
   }
+  const dragging = (drag: boolean) => {
+    dispatch({ type: UIAction.Dragging, payload: drag })
+  }
+
   return (
     <UIContext.Provider
-      value={{ ...state, openSideMenu, closeSideMenu, setIsAddingEntry }}
+      value={{
+        ...state,
+        openSideMenu,
+        closeSideMenu,
+        setIsAddingEntry,
+        dragging,
+      }}
     >
       {children}
     </UIContext.Provider>
