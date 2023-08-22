@@ -1,19 +1,19 @@
 'use client'
 import { UIState } from './'
 
-export enum Action {
+export enum UIAction {
   Open = 'UI-OPEN-SIDEBAR',
   Close = 'UI-CLOSE-SIDEBAR',
 }
 
-type UIActionType = { type: Action }
+type UIActionType = { type: UIAction }
 
 export const uiReducer = (state: UIState, action: UIActionType): UIState => {
   switch (action.type) {
-    case Action.Open:
+    case UIAction.Open:
       return { ...state, sideMenuOpen: true }
 
-    case Action.Close:
+    case UIAction.Close:
       return { ...state, sideMenuOpen: false }
 
     default:

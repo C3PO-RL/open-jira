@@ -1,12 +1,14 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { AddCircleOutline, SaveOutlined } from '@mui/icons-material'
 import { Box, Button, TextField } from '@mui/material'
+import { EntriesContext } from '@/context/entries'
 
 export const NewEntry = () => {
-  const [isAdding, setIsAdding] = useState(false)
-  const [inputValue, setInputValue] = useState('')
-  const [touched, setTouched] = useState(false)
+  const [isAdding, setIsAdding] = useState<boolean>(false)
+  const [inputValue, setInputValue] = useState<string>('')
+  const [touched, setTouched] = useState<boolean>(false)
+  const { addNewEntry } = useContext(EntriesContext)
 
   const onTextFieldChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -16,7 +18,10 @@ export const NewEntry = () => {
 
   const onSave = () => {
     if (inputValue.length === 0) return
-    console.log({ inputValue })
+    addNewEntry(inputValue)
+    setIsAdding(false)
+    setTouched(false)
+    setInputValue('')
   }
   return (
     <Box sx={{ marginBottom: 2, paddingX: 2 }}>
