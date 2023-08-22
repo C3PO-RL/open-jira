@@ -1,4 +1,4 @@
-import { EntryList } from '@/components/ui'
+import { EntryList, NewEntry } from '@/components/ui'
 import { Status } from '@/interfaces'
 import { Card, CardContent, CardHeader, Grid } from '@mui/material'
 
@@ -9,6 +9,7 @@ const HomePage = () => {
         <Card sx={{ height: 'calc(100vh - 100px)' }}>
           <CardHeader title='Pending' />
           <CardContent>
+            <NewEntry />
             <EntryList status={Status.Pending} />
           </CardContent>
         </Card>
