@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-import { connected } from 'process'
 
 // 0= disconnected
 // 1 = connected
@@ -24,13 +23,13 @@ export const connect = async () => {
     await mongoose.disconnect()
   }
 
-  await mongoose.connect('')
+  await mongoose.connect(process.env.MONGO_URL || '')
   mongooConnection.isConnected = 1
-  console.log('connected to mongo db:,', '')
+  console.log('connected to mongo db:,', process.env.MONGO_URL)
 }
 
 export const disconnect = async () => {
-  if (mongooConnection.isConnected !== 0) return
+  if (mongooConnection.isConnected === 0) return
   await mongoose.disconnect()
   console.log('disconnected')
 }
