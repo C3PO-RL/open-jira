@@ -1,35 +1,17 @@
 'use client'
-import { useReducer, ReactNode } from 'react'
+import { useReducer, ReactNode, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { EntriesContext } from './EntriesContext'
 import { EntriesAction, entriesReducer } from './entriesReducer'
 import { Entry, Status } from '@/interfaces'
+import { entriesApi } from '@/services'
 
 export interface EntriesState {
   entries: Entry[]
 }
 
 const ENTRIES_INITIAL_STATE: EntriesState = {
-  entries: [
-    {
-      _id: uuidv4(),
-      description: 'initial state description 1',
-      createdAt: Date.now(),
-      status: Status.Pending,
-    },
-    {
-      _id: uuidv4(),
-      description: 'initial state description 2',
-      createdAt: Date.now() - 1000000,
-      status: Status.InProgress,
-    },
-    {
-      _id: uuidv4(),
-      description: 'initial state description 3',
-      createdAt: Date.now() - 100000,
-      status: Status.Finished,
-    },
-  ],
+  entries: [],
 }
 
 export const EntriesProvider = ({ children }: { children: ReactNode }) => {
@@ -48,6 +30,13 @@ export const EntriesProvider = ({ children }: { children: ReactNode }) => {
   const updateEntry = (entry: Entry) => {
     dispatch({ type: EntriesAction.UpdateEntry, payload: entry })
   }
+  const refreshEntries = async () => {
+    const { data } = await entriesApi.get<Entry>('/entries')
+    console.log(data)
+  }
+  useEffect(() => {
+    refreshEntries()
+  }, [])
 
   return (
     <EntriesContext.Provider value={{ ...state, addNewEntry, updateEntry }}>
