@@ -1,4 +1,5 @@
-import { db } from '@/database'
+import { db, seedData } from '@/database'
+import { Entry } from '@/models'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(req: NextRequest) {
@@ -9,6 +10,8 @@ export async function GET(req: NextRequest) {
   }
 
   await db.connect()
+  await Entry.deleteMany()
+  await Entry.insertMany(seedData.entries)
   await db.disconnect()
   return new Response(JSON.stringify({ message: 'success' }), {
     status: 200,
