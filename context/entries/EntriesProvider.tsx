@@ -31,8 +31,8 @@ export const EntriesProvider = ({ children }: { children: ReactNode }) => {
     dispatch({ type: EntriesAction.UpdateEntry, payload: entry })
   }
   const refreshEntries = async () => {
-    const { data } = await entriesApi.get<Entry>('/entries')
-    console.log(data)
+    const { data } = await entriesApi.get<Entry[]>('/entries')
+    dispatch({ type: EntriesAction.InitalLoad, payload: data })
   }
   useEffect(() => {
     refreshEntries()
