@@ -5,9 +5,13 @@ import { EntriesState } from './EntriesProvider'
 export enum EntriesAction {
   Add = 'ADD',
   UpdateEntry = 'UPDATE-ENTRY',
+  InitalLoad = 'INITIAL-LOAD',
 }
 
-type EntriesActionType = { type: EntriesAction; payload: Entry }
+type EntriesActionType =
+  | { type: EntriesAction.Add; payload: Entry }
+  | { type: EntriesAction.UpdateEntry; payload: Entry }
+  | { type: EntriesAction.InitalLoad; payload: Entry[] }
 
 export const entriesReducer = (
   state: EntriesState,
@@ -28,6 +32,9 @@ export const entriesReducer = (
           return entry
         }),
       }
+
+    case EntriesAction.InitalLoad:
+      return { ...state, entries: [...action.payload] }
 
     default:
       return state

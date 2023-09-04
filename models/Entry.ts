@@ -10,6 +10,7 @@ const entrySchema = new Schema({
     type: String,
     enum: { values: ['Pending', 'InProgress', 'Finished'] },
     message: '{VALUE} is not allowed',
+    default: 'Pending',
   },
 })
 
