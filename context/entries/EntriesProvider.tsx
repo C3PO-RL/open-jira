@@ -1,6 +1,5 @@
 'use client'
 import { useReducer, ReactNode, useEffect } from 'react'
-import { v4 as uuidv4 } from 'uuid'
 import { EntriesContext } from './EntriesContext'
 import { EntriesAction, entriesReducer } from './entriesReducer'
 import { Entry, Status } from '@/interfaces'
@@ -17,23 +16,27 @@ const ENTRIES_INITIAL_STATE: EntriesState = {
 export const EntriesProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(entriesReducer, ENTRIES_INITIAL_STATE)
 
-  const addNewEntry = (description: string) => {
-    const newEntry: Entry = {
-      _id: uuidv4(),
-      description,
-      createdAt: Date.now(),
-      status: Status.Pending,
-    }
-    dispatch({ type: EntriesAction.Add, payload: newEntry })
+  const updateEntry = async (entry: Entry) => {
+    const { data } = await entriesApi.put<Entry>(`/entries/${entry._id}`, {
+      description: entry.description,
+      status: entry.status,
+    })
+
+    dispatch({ type: EntriesAction.UpdateEntry, payload: data })
   }
 
-  const updateEntry = (entry: Entry) => {
-    dispatch({ type: EntriesAction.UpdateEntry, payload: entry })
-  }
   const refreshEntries = async () => {
     const { data } = await entriesApi.get<Entry[]>('/entries')
     dispatch({ type: EntriesAction.InitalLoad, payload: data })
   }
+
+  const addNewEntry = async (description: string) => {
+    const { data } = await entriesApi.post<Entry>('/entries', {
+      description: description,
+    })
+    dispatch({ type: EntriesAction.Add, payload: data })
+  }
+
   useEffect(() => {
     refreshEntries()
   }, [])
