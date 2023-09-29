@@ -17,12 +17,16 @@ export const EntriesProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(entriesReducer, ENTRIES_INITIAL_STATE)
 
   const updateEntry = async (entry: Entry) => {
-    const { data } = await entriesApi.put<Entry>(`/entries/${entry._id}`, {
-      description: entry.description,
-      status: entry.status,
-    })
+    try {
+      const { data } = await entriesApi.put<Entry>(`/entries/${entry._id}`, {
+        description: entry.description,
+        status: entry.status,
+      })
 
-    dispatch({ type: EntriesAction.UpdateEntry, payload: data })
+      dispatch({ type: EntriesAction.UpdateEntry, payload: data })
+    } catch (error) {
+      console.log({ error })
+    }
   }
 
   const refreshEntries = async () => {
@@ -37,6 +41,16 @@ export const EntriesProvider = ({ children }: { children: ReactNode }) => {
     dispatch({ type: EntriesAction.Add, payload: data })
   }
 
+  const getEntryById = async (id: string) => {
+    try {
+      const { data } = await entriesApi.get<Entry>(`/entries/${id}`)
+
+      console.log({ data })
+    } catch (error) {
+      console.log({ error })
+    }
+  }
+  getEntryById('64f65c4a212eae01624fa69a')
   useEffect(() => {
     refreshEntries()
   }, [])

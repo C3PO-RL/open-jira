@@ -41,3 +41,31 @@ export async function PUT(req: Request) {
     )
   }
 }
+
+export async function GET(req: Request) {
+  const id = req.url.split('entries/')[1]
+  console.log(id)
+  try {
+    if (!mongoose.isValidObjectId(id)) {
+      return NextResponse.json({ message: 'bad request' }, { status: 400 })
+    }
+
+    await db.connect()
+    const entryById = await Entry.findById(id)
+
+    if (!entryById) {
+      await db.disconnect()
+      return NextResponse.json({ message: 'id not found' }, { status: 400 })
+    } else {
+      await db.disconnect()
+      return NextResponse.json({ entryById }, { status: 200 })
+    }
+  } catch (error: any) {
+    console.log({ error })
+    await db.disconnect()
+    return NextResponse.json(
+      { message: error.errors.status.message.message },
+      { status: 400 }
+    )
+  }
+}
